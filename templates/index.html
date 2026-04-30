@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Password Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 class="welcome">👋 Welcome!</h1>
+    <p class="subtitle">Your AI is ready to analyze your password 🔐</p>
+
+    <h2>AI Password Analyzer</h2>
+
+    <div class="pass-box">
+        <input type="password" id="password" placeholder="Enter password..." autocomplete="off">
+        <span class="eye" onclick="toggle()">👁</span>
+    </div>
+
+    <div class="meter">
+        <div id="strength-bar"></div>
+    </div>
+
+    <p id="strength-text"></p>
+    <p id="ai-result"></p>
+
+    <div id="ai-messages"></div>
+
+</div>
+
+<!-- 🤖 LEFT ROBOT -->
+<div class="robot left">
+    <div class="bubble">
+        🔐 I check your password strength <br>
+        and keep you safe!
+    </div>
+    <img src="{{ url_for('static', filename='robot.png') }}">
+</div>
+
+<!-- 🤖 RIGHT ROBOT -->
+<div class="robot right">
+    <div class="bubble">
+        🤖 Type your password above <br>
+        I analyze it instantly!
+    </div>
+    <img src="{{ url_for('static', filename='robot.png') }}">
+</div>
+
+<script>
+const input = document.getElementById("password");
+const bar = document.getElementById("strength-bar");
+const text = document.getElementById("strength-text");
+const messagesDiv = document.getElementById("ai-messages");
+
+function toggle(){
+    const p = document.getElementById("password");
+    p.type = p.type === "password" ? "text" : "password";
+}
+
+input.addEventListener("input", async () => {
+
+    const password = input.value;
+
+    const response = await fetch("/analyze", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ password })
+    });
+
+    const data = await response.json();
+
+    bar.style.width = data.score + "%";
+
+    if (data.score < 50) {
+        bar.style.background = "#74c0fc";
+        text.className = "weak";
+    } else if (data.score < 80) {
+        bar.style.background = "#38d9a9";
+        text.className = "medium";
+    } else {
+        bar.style.background = "#2ecc71";
+        text.className = "strong";
+    }
+
+    text.innerText = data.strength;
+
+    document.getElementById("ai-result").innerText =
+        "🤖 AI: " + data.strength;
+
+    messagesDiv.innerHTML = "";
+    data.messages.forEach(msg => {
+        const p = document.createElement("p");
+        p.innerText = msg;
+        messagesDiv.appendChild(p);
+    });
+});
+</script>
+
+</body>
+</html>

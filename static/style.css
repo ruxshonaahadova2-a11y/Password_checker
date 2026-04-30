@@ -1,0 +1,131 @@
+body {
+    font-family: 'Segoe UI', Arial;
+    background: linear-gradient(135deg, #a5f3fc, #d1fae5);
+    margin: 0;
+    height: 100vh;
+    text-align: center;
+}
+
+/* CARD */
+.container {
+    background: white;
+    padding: 30px;
+    width: 420px;
+    margin: 80px auto;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* INPUT */
+.pass-box {
+    position: relative;
+}
+
+input {
+    padding: 12px;
+    width: 90%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.eye {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    cursor: pointer;
+}
+
+/* BAR */
+.meter {
+    width: 90%;
+    height: 12px;
+    background: #eee;
+    border-radius: 10px;
+    margin: 15px auto;
+}
+
+#strength-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 10px;
+    transition: 0.4s;
+}
+
+/* TEXT */
+#strength-text {
+    font-weight: bold;
+}
+
+#ai-result {
+    margin-top: 5px;
+    color: #2ecc71;
+}
+
+/* ================= */
+/* 🤖 ROBOT FIX */
+/* ================= */
+
+.robot {
+    position: fixed;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* LEFT / RIGHT */
+.robot.left {
+    left: 40px;
+    animation: swayL 3s infinite;
+}
+
+.robot.right {
+    right: 40px;
+    animation: swayR 3s infinite;
+}
+
+/* IMAGE (KESILMAYDI) */
+.robot img {
+    width: 180px;   /* optimal size */
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.25));
+    animation: float 3s infinite;
+}
+
+/* BUBBLE */
+.bubble {
+    background: white;
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    width: 180px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    animation: fade 4s infinite;
+}
+
+/* ANIMATION */
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes swayL {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes swayR {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes fade {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
